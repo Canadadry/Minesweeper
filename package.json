@@ -1,0 +1,17 @@
+{
+  "name": "MineSweeper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tstl -p tsconfig.json && cp -R assets build/",
+    "start": "npm run build && love build",
+    "pack": "npm run build && cd build && zip -9 -r ../MineSweeper.love *"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript-to-lua": "^0.11.1"
+  }
+}
