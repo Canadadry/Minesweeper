@@ -4,13 +4,12 @@
   "description": "",
   "main": "main.ts",
   "scripts": {
+    "clean": "rm -rf build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tstl -p tsconfig.json && cp -R assets build/",
+    "build": "npm run clean && tstl -p tsconfig.json && cp -R assets build/",
     "start": "npm run build && love build",
     "pack": "npm run build && cd build && zip -9 -r ../MineSweeper.love *"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "typescript-to-lua": "^0.11.1"
   }
