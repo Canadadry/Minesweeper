@@ -4,33 +4,39 @@ import {Game,State} from './src/game'
 
 let size = 10;
 let mine = 10;
-let zoomX:number = 2;
-let zoomY:number = 2;
+let zoom:number = 2;
 let game:Game;
 let ress:Ressource;
+let offsetY = 0;
+let w:number = 960;
+let h:number = 2079;
 
 function restart(){
 	game = new Game(size,size,mine);
 	ress.updateTilesetBatch(size,size,game.tiles())
 	ress.play("start")
+
 }
 
 
 love.update = function(dt) {};
 
 love.draw = function() {
-	love.graphics.draw(ress.batch,0,0,0, zoomX, zoomY)
+	love.graphics.draw(ress.batch,0,offsetY,0, zoom, zoom)
 };
 
 love.load = function() {
+	if (love.system.getOS() != 'iOS' || love.system.getOS() != 'Android'){
+		love.window.setMode(600,600,{})
+	}
 	math.randomseed(os.time())
 	ress = new Ressource();
 	ress.initBatch(size,size);
-	love.window.setMode( 
-			ress.tileSize*size*zoomX,
-			ress.tileSize*size*zoomY,
-			{}
-	)
+	let mode = love.window.getMode();
+	w = mode[0];
+	h = mode[1];
+	zoom = w/(size*ress.tileSize);
+	offsetY = (h-(size*ress.tileSize*zoom))/2
 	restart();
 };
 
@@ -43,8 +49,8 @@ love.keyreleased  = function (key:KeyConstant){
 };
 
 love.mousereleased = function( x:number, y:number, button:number,isTouch:boolean ){
-	let x_pos:number = math.floor(x/ress.tileSize/zoomX);
-	let y_pos:number = math.floor(y/ress.tileSize/zoomY);
+	let x_pos:number = math.floor(x/ress.tileSize/zoom);
+	let y_pos:number = math.floor((y-offsetY)/ress.tileSize/zoom);
 
 	if(!game.inState("playing")) {
 		restart();
