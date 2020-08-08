@@ -2,6 +2,8 @@
 
 A Basic MineSweeper for Love2D
 
+![minesweeper screenshot](screenshot.png)
+
 A Love2D game using `typescript-to-lua`
 
 ## Setup

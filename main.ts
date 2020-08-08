@@ -23,6 +23,7 @@ love.draw = function() {
 };
 
 love.load = function() {
+	math.randomseed(os.time())
 	ress = new Ressource();
 	ress.initBatch(size,size);
 	love.window.setMode( 

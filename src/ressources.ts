@@ -55,6 +55,7 @@ export class Ressource{
 	}
 
 	play(st: SoundType){
+		love.audio.stop()
 		love.audio.play(this.sounds[st])
 	}
 }
