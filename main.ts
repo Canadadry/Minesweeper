@@ -2,7 +2,7 @@
 import { Ressource,SoundType } from './src/ressources'
 import {Game,State} from './src/game'
 
-let size = 8;
+let size = 10;
 let mine = 10;
 let zoomX:number = 2;
 let zoomY:number = 2;
@@ -30,6 +30,7 @@ love.load = function() {
 			ress.tileSize*size*zoomY,
 			{}
 	)
+	restart();
 };
 
 
@@ -42,23 +43,25 @@ love.keyreleased  = function (key:KeyConstant){
 
 love.mousereleased = function( x:number, y:number, button:number,isTouch:boolean ){
 	let x_pos:number = math.floor(x/ress.tileSize/zoomX);
-	let y_pos:number = math.floor(x/ress.tileSize/zoomY);
+	let y_pos:number = math.floor(y/ress.tileSize/zoomY);
 
-	if(game.inState("playing")) {
+	if(!game.inState("playing")) {
 		restart();
 		return;
 	} 
 	let ret:boolean = false;
-	switch (button){
-		case 0: ret = game.reveal(x,y);
-		default: ret = game.flag(x,y)
+	if(button == 1){
+		ret = game.reveal(x_pos,y_pos);
+	}
+	else {
+		ret = game.flag(x_pos,y_pos);	
 	}
 
 	if (game.inState("win")){
 		ress.play("win")
 	}
 	else if(game.inState("loose")){
-
+		ress.play("loose")
 	}
 	else if(ret){
 		ress.play("nothing")

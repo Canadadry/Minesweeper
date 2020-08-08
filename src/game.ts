@@ -36,6 +36,7 @@ export class Game{
 	flagLeft:number;
 	state:State;
 	map:Array<Array<Cell>>;
+	revealedCells:number;
 
 	constructor(w:number,h:number,m:number){
 		this.width = w;
@@ -44,6 +45,7 @@ export class Game{
 		this.minesFound = 0; 
 		this.flagLeft = m;
 		this.state = "playing";
+		this.revealedCells = 0;
 
 		this.map = [];
 		for(let x=0;x<this.width;x++){
@@ -120,7 +122,7 @@ export class Game{
 
 		if (cell.mineAround != 9 ) { return true }
 
-		this.minesFound += cell.flagged?-1:1;
+		this.minesFound += cell.flagged?1:-1;
 		if(this.minesFound ==this.mines){
 			this.state = "win";
 		}
@@ -137,6 +139,10 @@ export class Game{
 
 		if(cell.discovered ) { return false }
 		if(cell.flagged ) { return false }
+
+		if(cell.discovered==false ){
+			this.revealedCells ++;
+		}
 	
 		cell.discovered = true;
 		if (cell.mineAround == 9 ){
@@ -144,7 +150,14 @@ export class Game{
 			return true;
 		}
 		if (cell.mineAround == 0 ){
-			this.reveal(x,y);
+			this.revealAround(x,y);
+		}
+
+		let cellsLeft = this.width*this.height-this.revealedCells 
+
+		if((cellsLeft+this.minesFound)==this.mines){
+			this.state = "win"
+			return false;
 		}
 
 		return true;

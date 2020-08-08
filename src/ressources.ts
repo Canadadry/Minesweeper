@@ -47,8 +47,8 @@ export class Ressource{
 				let id = tiles[i][j]
 				this.batch.add(
 					this.quads[id],
-					 (i-1)*this.tileSize, 
-					 (j-1)*this.tileSize
+					i*this.tileSize, 
+					j*this.tileSize
 				)
 			}
 		}
