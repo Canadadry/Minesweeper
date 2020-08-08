@@ -1,10 +1,11 @@
 # MinesweeperLove2D
 
 A Basic MineSweeper for Love2D
+Can be launch on desktop and mobile. 
+On mobile a long press place flag
 
-![minesweeper screenshot](screenshot.png)
-
-A Love2D game using `typescript-to-lua`
+![minesweeper desktop screenshot](screenshot.png)
+![minesweeper desktop screenshot](screenshot-mobile.png)
 
 ## Setup
 - `npm install`
@@ -15,3 +16,8 @@ A Love2D game using `typescript-to-lua`
 
 ## Packing for sending 
 - `npm run pack`
+
+
+## Mobile
+
+The build is the same. you just need the love2d app to read `.love` file
