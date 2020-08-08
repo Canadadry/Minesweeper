@@ -25,10 +25,10 @@ love.draw = function() {
 love.load = function() {
 	ress = new Ressource();
 	ress.initBatch(size,size);
-	love.graphics.setMode( 
+	love.window.setMode( 
 			ress.tileSize*size*zoomX,
 			ress.tileSize*size*zoomY,
-			false, true, 0
+			{}
 	)
 };
 
@@ -44,7 +44,7 @@ love.mousereleased = function( x:number, y:number, button:number,isTouch:boolean
 	let x_pos:number = math.floor(x/ress.tileSize/zoomX);
 	let y_pos:number = math.floor(x/ress.tileSize/zoomY);
 
-	if(game.state != "playing") {
+	if(game.inState("playing")) {
 		restart();
 		return;
 	} 
@@ -53,12 +53,16 @@ love.mousereleased = function( x:number, y:number, button:number,isTouch:boolean
 		case 0: ret = game.reveal(x,y);
 		default: ret = game.flag(x,y)
 	}
-	switch (game.state){
-		case "win" : ress.play("win")
-		case "loose" : ress.play("loose")
-		default : if(ret){
-			ress.play("nothing")
-		}
+
+	if (game.inState("win")){
+		ress.play("win")
 	}
+	else if(game.inState("loose")){
+
+	}
+	else if(ret){
+		ress.play("nothing")
+	}
+
 	ress.updateTilesetBatch(size,size,game.tiles())
 };

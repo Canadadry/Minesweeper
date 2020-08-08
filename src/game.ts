@@ -66,6 +66,10 @@ export class Game{
 		}
 	}
 
+	inState(s:State):boolean{
+		return this.state==s;
+	}
+
 
 
 	placeMine(x:number,y:number):boolean {
