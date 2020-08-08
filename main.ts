@@ -10,6 +10,7 @@ let ress:Ressource;
 let offsetY = 0;
 let w:number = 960;
 let h:number = 2079;
+let pressStartedAt: number = 0;
 
 function restart(){
 	game = new Game(size,size,mine);
@@ -48,6 +49,10 @@ love.keyreleased  = function (key:KeyConstant){
 	}
 };
 
+love.mousepressed = function( x:number, y:number, button:number,isTouch:boolean ){
+	pressStartedAt = love.timer.getTime()
+}
+
 love.mousereleased = function( x:number, y:number, button:number,isTouch:boolean ){
 	let x_pos:number = math.floor(x/ress.tileSize/zoom);
 	let y_pos:number = math.floor((y-offsetY)/ress.tileSize/zoom);
@@ -57,7 +62,9 @@ love.mousereleased = function( x:number, y:number, button:number,isTouch:boolean
 		return;
 	} 
 	let ret:boolean = false;
-	if(button == 1){
+	let elapsed:number = love.timer.getTime()-pressStartedAt;
+
+	if(button == 1 && elapsed <= 0.3){
 		ret = game.reveal(x_pos,y_pos);
 	}
 	else {
