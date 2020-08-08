@@ -36,16 +36,15 @@ export class Ressource{
 		}
 	}
 
-	initBatch(w :number,h:number,map:Array<Array<number>>,model:Array<number>){
+	initBatch(w :number,h:number){
 		this.batch = love.graphics.newSpriteBatch(this.image, w*h)
-		this.updateTilesetBatch(w,h,map,model)
 	}
 
-	updateTilesetBatch(w :number,h:number,map:Array<Array<number>>,model:Array<number>){
+	updateTilesetBatch(w :number,h:number,tiles:Array<Array<number>>){
 		this.batch.clear()
 		for(let i=0;i<w;i++){
 			for(let j=0;j<h;j++){
-				let id = model[map[i][j]]
+				let id = tiles[i][j]
 				this.batch.add(
 					this.quads[id],
 					 (i-1)*this.tileSize, 
